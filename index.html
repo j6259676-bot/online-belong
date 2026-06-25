@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F6F0EA">
+<title>報名成功｜ONLINE BELONG・The Hope</title>
+<style>
+  :root{
+    --ink:#1D292E;
+    --gold:#FFCC32;
+    --sand:#F6F0EA;
+    --card:#ffffff;
+    --line:rgba(29,41,46,.08);
+    --muted:#8a9296;
+    --sub:#5b6468;
+    --radius:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+    background:var(--sand);
+    color:var(--ink);
+    min-height:100vh;
+    min-height:100dvh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    line-height:1.6;
+    /* iOS 安全區 + 響應式邊距 */
+    padding:max(20px,env(safe-area-inset-top)) clamp(16px,5vw,24px) max(20px,env(safe-area-inset-bottom));
+  }
+
+  .card{
+    background:var(--card);
+    border-radius:var(--radius);
+    width:100%;
+    max-width:460px;
+    padding:clamp(28px,7vw,44px) clamp(22px,6vw,38px);
+    box-shadow:0 6px 30px rgba(29,41,46,.08);
+  }
+
+  /* 勾勾 */
+  .check{
+    width:clamp(48px,13vw,58px);
+    height:clamp(48px,13vw,58px);
+    background:var(--gold);
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:clamp(16px,4vw,22px);
+  }
+  .check svg{width:55%;height:55%;}
+
+  h1{font-size:clamp(21px,5.5vw,25px);font-weight:800;letter-spacing:-.01em;margin-bottom:10px;}
+  .sub{font-size:clamp(14px,3.8vw,15.5px);color:var(--sub);line-height:1.7;margin-bottom:clamp(22px,6vw,28px);}
+
+  .section-label{
+    font-size:11px;font-weight:800;color:var(--muted);
+    letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;
+  }
+
+  .event-card{
+    background:var(--sand);
+    border-radius:12px;
+    padding:6px clamp(14px,4vw,18px);
+    margin-bottom:clamp(20px,5vw,26px);
+  }
+  .event-row{
+    display:flex;gap:14px;align-items:baseline;
+    padding:clamp(11px,3vw,13px) 0;
+    font-size:clamp(13.5px,3.7vw,15px);
+    border-bottom:1px solid var(--line);
+  }
+  .event-row:last-child{border-bottom:none;}
+  .event-label{color:var(--muted);width:64px;flex-shrink:0;font-weight:500;}
+  .event-value{color:var(--ink);font-weight:600;flex:1;word-break:break-word;}
+
+  /* 行事曆按鈕 */
+  .btn{
+    display:flex;align-items:center;justify-content:center;gap:9px;
+    width:100%;min-height:52px;
+    border-radius:12px;text-decoration:none;
+    font-size:clamp(15px,4vw,16px);font-weight:700;
+    transition:transform .12s ease,box-shadow .12s ease,opacity .12s ease;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .btn:active{transform:scale(.985);}
+  .btn svg{width:19px;height:19px;flex-shrink:0;}
+  .btn+.btn{margin-top:11px;}
+  .btn-primary{background:var(--gold);color:var(--ink);}
+  .btn-secondary{background:var(--ink);color:var(--gold);}
+  @media(hover:hover){.btn:hover{opacity:.9;box-shadow:0 4px 14px rgba(29,41,46,.12);}}
+
+  .zoom-hint{
+    background:var(--sand);border-radius:12px;
+    padding:14px 16px;font-size:clamp(12.5px,3.4vw,13.5px);
+    color:var(--sub);margin-top:18px;line-height:1.75;
+  }
+  .zoom-hint strong{color:var(--ink);}
+  .zoom-hint .eg{color:var(--muted);}
+
+  .footer{font-size:clamp(12px,3.2vw,13px);color:var(--muted);margin-top:22px;line-height:1.65;}
+
+  /* 載入 / 錯誤狀態 */
+  .state{text-align:center;color:var(--sub);padding:clamp(20px,6vw,30px) 0;}
+  .spinner{
+    width:34px;height:34px;margin:0 auto 16px;
+    border:3px solid var(--line);border-top-color:var(--gold);
+    border-radius:50%;animation:spin .8s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  [hidden]{display:none!important;}
+</style>
+</head>
+<body>
+  <div class="card">
+
+    <!-- 載入中 -->
+    <div id="loading" class="state">
+      <div class="spinner"></div>
+      <p>載入活動資訊中…</p>
+    </div>
+
+    <!-- 主內容 -->
+    <div id="content" hidden>
+      <div class="check">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+             stroke="#1D292E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+
+      <h1>報名成功！</h1>
+      <p class="sub">歡迎你加入 ONLINE BELONG。<br>不管你來自哪裡，這裡是你歸屬的家。</p>
+
+      <!-- 有活動時填入 -->
+      <div id="event-block" hidden>
+        <p class="section-label">活動資訊</p>
+        <div class="event-card">
+          <div class="event-row">
+            <span class="event-label">日期</span>
+            <span class="event-value" id="v-date"></span>
+          </div>
+          <div class="event-row">
+            <span class="event-label">台灣時間</span>
+            <span class="event-value" id="v-twtime"></span>
+          </div>
+          <div class="event-row" id="local-time-row" hidden>
+            <span class="event-label">你的時間</span>
+            <span class="event-value" id="v-localtime"></span>
+          </div>
+          <div class="event-row">
+            <span class="event-label">Zoom ID</span>
+            <span class="event-value" id="v-meeting"></span>
+          </div>
+        </div>
+
+        <p class="section-label">加入行事曆，到時不會忘記</p>
+        <a id="btn-gcal" class="btn btn-primary" target="_blank" rel="noopener">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          加入 Google Calendar
+        </a>
+        <a id="btn-ics" class="btn btn-secondary" target="_blank" rel="noopener">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          Apple / Outlook Calendar
+        </a>
+
+        <div class="zoom-hint">
+          上線前請把 Zoom 名字改成：<strong>國家-城市-姓名</strong><br>
+          <span class="eg">例：台灣-台北-王小明 ｜ 美國-紐約-John Wang</span>
+        </div>
+      </div>
+
+      <!-- 無活動時 -->
+      <p id="no-event" class="sub" hidden>請留意確認信，活動資訊將在信中提供。</p>
+
+      <p class="footer">確認信已寄到你的信箱，如未收到請檢查垃圾郵件。</p>
+    </div>
+  </div>
+
+<script>
+  // GAS Web App exec 端點（?action=event 回傳當前活動 JSON）
+  var GAS_URL = 'https://script.google.com/macros/s/AKfycbzdmHwUKHgPHePQJ-eA-38lGrPARCdwtO71_jGOIF6C5QeYiQdBFeiaAzKKw8enFTHTTg/exec';
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  function show(el){ el.hidden = false; }
+  function hide(el){ el.hidden = true; }
+
+  // 瀏覽器端：依使用者裝置時區換算本地時間
+  function renderLocalTime(startISO, endISO){
+    try{
+      var s = new Date(startISO), e = new Date(endISO);
+      var tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      var fmt = new Intl.DateTimeFormat('en-US',{timeZone:tz,hour:'numeric',minute:'2-digit',hour12:true});
+      var tzFmt = new Intl.DateTimeFormat('en-US',{timeZone:tz,timeZoneName:'short'});
+      var tzName = (tzFmt.formatToParts(s).find(function(p){return p.type==='timeZoneName';})||{value:''}).value;
+      var city = tz.split('/').pop().replace(/_/g,' ');
+      var clean = function(t){ return t.replace(/:00 (AM|PM)/,'$1').replace(/ (AM|PM)/,'$1'); };
+      $('v-localtime').textContent = clean(fmt.format(s)) + '–' + clean(fmt.format(e)) + ' (' + city + ' / ' + tzName + ')';
+      show($('local-time-row'));
+    }catch(err){ /* 換算失敗就不顯示本地時間列 */ }
+  }
+
+  function render(d){
+    hide($('loading'));
+    show($('content'));
+
+    if(!d || !d.has_event){
+      show($('no-event'));
+      return;
+    }
+
+    hide($('no-event'));
+    $('v-date').textContent    = d.date_str;
+    $('v-twtime').textContent  = d.tw_time + ' 台灣時間 (GMT+8)';
+    $('v-meeting').textContent = d.meeting_id || '—';
+    $('btn-gcal').href = d.gcal_url;
+
+    if(d.ics_url){ $('btn-ics').href = d.ics_url; }
+    else{ hide($('btn-ics')); }
+
+    if(d.start_iso && d.end_iso){ renderLocalTime(d.start_iso, d.end_iso); }
+
+    show($('event-block'));
+  }
+
+  // 載入活動資料（加 timestamp 避免快取）
+  fetch(GAS_URL + (GAS_URL.indexOf('?') < 0 ? '?' : '&') + 'action=event&t=' + Date.now())
+    .then(function(r){ return r.json(); })
+    .then(render)
+    .catch(function(){
+      // 取不到資料：仍顯示報名成功，請看確認信
+      hide($('loading'));
+      show($('content'));
+      show($('no-event'));
+    });
+</script>
+</body>
+</html>
