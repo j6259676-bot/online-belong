@@ -244,6 +244,7 @@
   // GAS 的 echo 端點會隨機回「找不到網頁」HTML、偶爾掛住幾十秒，所以只當補充不當主力。
   var CACHE_KEY = 'ob_event_v1';
   var rendered = null;
+  var staticEvent = null;   // event.json 的內容（同站的 event.ics 是照它產的）
 
   function renderIfChanged(d){
     var key = JSON.stringify(d);
@@ -284,7 +285,7 @@
 
   // 第 1 層：靜態 event.json（失敗才退到瀏覽器快取，再失敗才顯示「請看確認信」）
   fetchWithTimeout('event.json?t=' + Date.now(), 5000)
-    .then(renderIfChanged)
+    .then(function(d){ staticEvent = d; renderIfChanged(d); })
     .catch(function(){
       var cached = readCache();
       if(cached){ renderIfChanged(cached); return; }
@@ -296,6 +297,9 @@
   // 第 2 層：GAS 最新資料，抓到就覆蓋並存快取；抓不到就算了
   fetchGas()
     .then(function(d){
+      // 同一場就沿用同站的 event.ics（GAS 的 ics 端點一樣會隨機 404）
+      if(staticEvent && d.has_event && d.start_iso === staticEvent.start_iso && d.end_iso === staticEvent.end_iso &&
+         d.zoom_url === staticEvent.zoom_url){ d.ics_url = 'event.ics'; }
       try{ localStorage.setItem(CACHE_KEY, JSON.stringify(d)); }catch(e){}
       renderIfChanged(d);
     })
